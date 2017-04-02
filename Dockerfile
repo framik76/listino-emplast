@@ -51,20 +51,20 @@ ENV URL https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}
 LABEL version=$VERSION
 
 # Download tarball, verify it using gpg and extract
-RUN curl --output phpMyAdmin.tar.gz --location $URL \
-    && tar xzf phpMyAdmin.tar.gz \
-    && rm -f phpMyAdmin.tar.gz phpMyAdmin.tar.gz.asc \
-    && mv phpMyAdmin-$VERSION-all-languages /var/www/html/phpmyadmin \
-    && mv /var/www/html/phpmyadmin/doc/html /var/www/html/phpmyadmin/htmldoc \
-    && rm -rf /var/www/html/phpmyadmin/doc \
-    && mkdir /var/www/html/phpmyadmin/doc \
-    && mv /var/www/html/phpmyadmin/htmldoc /var/www/html/phpmyadmin/doc/html \
-    && rm /var/www/html/phpmyadmin/doc/html/.buildinfo /var/www/html/phpmyadmin/doc/html/objects.inv \
-    && rm -rf /var/www/html/phpmyadmin/js/jquery/src/ /var/www/html/phpmyadmin/js/openlayers/src/ /var/www/html/phpmyadmin/setup/ /var/www/html/phpmyadmin/examples/ /var/www/html/phpmyadmin/test/ /var/www/html/phpmyadmin/po/ /var/www/html/phpmyadmin/templates/test/ /var/www/html/phpmyadmin/phpunit.xml.* /var/www/html/phpmyadmin/build.xml  /var/www/html/phpmyadmin/composer.json /var/www/html/phpmyadmin/RELEASE-DATE-$VERSION \
-    && sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/etc/phpmyadmin/');@" /var/www/html/phpmyadmin/libraries/vendor_config.php \
-    && chown -R root:nobody /www \
-    && find /var/www/html/phpmyadmin -type d -exec chmod 750 {} \; \
-    && find /var/www/html/phpmyadmin -type f -exec chmod 640 {} \;
+RUN curl --output phpMyAdmin.tar.gz --location $URL
+RUN tar xzf phpMyAdmin.tar.gz
+RUN rm -f phpMyAdmin.tar.gz
+RUN mv phpMyAdmin-$VERSION-all-languages /var/www/html/phpmyadmin
+RUN mv /var/www/html/phpmyadmin/doc/html /var/www/html/phpmyadmin/htmldoc
+RUN rm -rf /var/www/html/phpmyadmin/doc
+RUN mkdir /var/www/html/phpmyadmin/doc
+RUN mv /var/www/html/phpmyadmin/htmldoc /var/www/html/phpmyadmin/doc/html
+RUN rm /var/www/html/phpmyadmin/doc/html/.buildinfo /var/www/html/phpmyadmin/doc/html/objects.inv
+RUN rm -rf /var/www/html/phpmyadmin/js/jquery/src/ /var/www/html/phpmyadmin/js/openlayers/src/ /var/www/html/phpmyadmin/setup/ /var/www/html/phpmyadmin/examples/ /var/www/html/phpmyadmin/test/ /var/www/html/phpmyadmin/po/ /var/www/html/phpmyadmin/templates/test/ /var/www/html/phpmyadmin/phpunit.xml.* /var/www/html/phpmyadmin/build.xml  /var/www/html/phpmyadmin/composer.json /var/www/html/phpmyadmin/RELEASE-DATE-$VERSION
+RUN sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/etc/phpmyadmin/');@" /var/www/html/phpmyadmin/libraries/vendor_config.php \
+RUN chown -R root:nobody /var/www/html/phpmyadmin
+RUN find /var/www/html/phpmyadmin -type d -exec chmod 750 {} \;
+RUN find /var/www/html/phpmyadmin -type f -exec chmod 640 {} \;
 
 ENV LOG_STDOUT **Boolean**
 ENV LOG_STDERR **Boolean**
