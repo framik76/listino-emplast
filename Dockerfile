@@ -51,15 +51,7 @@ ENV URL https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}
 LABEL version=$VERSION
 
 # Download tarball, verify it using gpg and extract
-RUN set -x \
-    && GNUPGHOME="$(mktemp -d)" \
-    && export GNUPGHOME \
-    && apk add --no-cache curl gnupg \
-    && curl --output phpMyAdmin.tar.gz --location $URL \
-    && curl --output phpMyAdmin.tar.gz.asc --location $URL.asc \
-    && gpgv --keyring /phpmyadmin.keyring phpMyAdmin.tar.gz.asc phpMyAdmin.tar.gz \
-    && apk del --no-cache curl gnupg \
-    && rm -rf "$GNUPGHOME" \
+RUN curl --output phpMyAdmin.tar.gz --location $URL \
     && tar xzf phpMyAdmin.tar.gz \
     && rm -f phpMyAdmin.tar.gz phpMyAdmin.tar.gz.asc \
     && mv phpMyAdmin-$VERSION-all-languages /var/www/html/phpmyadmin \
