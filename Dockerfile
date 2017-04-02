@@ -50,7 +50,6 @@ ENV VERSION 4.6.6
 ENV URL https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-all-languages.tar.gz
 LABEL version=$VERSION
 
-# Download tarball, verify it using gpg and extract
 RUN curl --output phpMyAdmin.tar.gz --location $URL
 RUN tar xzf phpMyAdmin.tar.gz
 RUN rm -f phpMyAdmin.tar.gz
@@ -61,10 +60,10 @@ RUN mkdir /var/www/html/phpmyadmin/doc
 RUN mv /var/www/html/phpmyadmin/htmldoc /var/www/html/phpmyadmin/doc/html
 RUN rm /var/www/html/phpmyadmin/doc/html/.buildinfo /var/www/html/phpmyadmin/doc/html/objects.inv
 RUN rm -rf /var/www/html/phpmyadmin/js/jquery/src/ /var/www/html/phpmyadmin/js/openlayers/src/ /var/www/html/phpmyadmin/setup/ /var/www/html/phpmyadmin/examples/ /var/www/html/phpmyadmin/test/ /var/www/html/phpmyadmin/po/ /var/www/html/phpmyadmin/templates/test/ /var/www/html/phpmyadmin/phpunit.xml.* /var/www/html/phpmyadmin/build.xml  /var/www/html/phpmyadmin/composer.json /var/www/html/phpmyadmin/RELEASE-DATE-$VERSION
-RUN sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/etc/phpmyadmin/');@" /var/www/html/phpmyadmin/libraries/vendor_config.php
-RUN chown -R root:nobody /var/www/html/phpmyadmin
-RUN find /var/www/html/phpmyadmin -type d -exec chmod 750 {} \;
-RUN find /var/www/html/phpmyadmin -type f -exec chmod 640 {} \;
+RUN sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/etc/phpmyadmin/');@" /var/www/html/phpmyadmin/libraries/vendor_config.phpà
+# RUN chown -R root:nobody /var/www/html/phpmyadmin
+# RUN find /var/www/html/phpmyadmin -type d -exec chmod 750 {} \;
+# RUN find /var/www/html/phpmyadmin -type f -exec chmod 640 {} \;
 
 ENV LOG_STDOUT **Boolean**
 ENV LOG_STDERR **Boolean**
